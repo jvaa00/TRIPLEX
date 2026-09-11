@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Acesso Profissional</title>
+    
+    <!-- Fonte moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Toast de sucesso -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Login realizado com sucesso!</span>
+    </div>
+
+    <!-- Card de Login -->
+    <div class="login-card">
+        <div class="login-header">
+            <h1>Bem-vindo de volta</h1>
+            <p>Insira suas credenciais para acessar</p>
+        </div>
+
+        <form class="login-form" id="loginForm" novalidate>
+            <!-- Campo Email -->
+            <div class="input-group">
+                <label for="email">
+                    <i class="fas fa-envelope"></i>
+                    E-mail
+                </label>
+                <div class="input-wrapper" id="emailWrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="seu@email.com" 
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+                <div class="error-message" id="emailError">
+                    <i class="fas fa-circle-exclamation"></i>
+                    <span>Por favor, insira um e-mail válido.</span>
+                </div>
+            </div>
+
+            <!-- Campo Senha -->
+            <div class="input-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                    Senha
+                </label>
+                <div class="input-wrapper" id="passwordWrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="••••••••" 
+                        autocomplete="current-password"
+                        required
+                    >
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="error-message" id="passwordError">
+                    <i class="fas fa-circle-exclamation"></i>
+                    <span>A senha deve ter pelo menos 6 caracteres.</span>
+                </div>
+            </div>
+
+            <!-- Opções -->
+            <div class="form-options">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    Lembrar-me
+                </label>
+                <a href="#" class="forgot-link">Esqueceu a senha?</a>
+            </div>
+
+            <!-- Botão de Login -->
+            <button type="submit" class="btn-login" id="loginBtn">
+                <span class="spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                    Entrar
+                </span>
+            </button>
+        </form>
+
+        <div class="login-footer">
+            Não tem uma conta? <a href="#">Cadastre-se</a>
+        </div>
+    </div>
+
+    <!-- JS externo -->
+    <script src="script.js"></script>
+</body>
+</html>
