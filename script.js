@@ -2,202 +2,283 @@
     'use strict';
 
     // ============================================
-    // ELEMENTOS DO DOM
+    // HERO CARROSSEL (auto-play + setas + dots)
     // ============================================
-    const loginForm = document.getElementById('loginForm');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const emailWrapper = document.getElementById('emailWrapper');
-    const passwordWrapper = document.getElementById('passwordWrapper');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-    const togglePassword = document.getElementById('togglePassword');
-    const loginBtn = document.getElementById('loginBtn');
-    const toast = document.getElementById('toast');
-    const toastMessage = document.getElementById('toastMessage');
+    const slides = document.querySelectorAll('.hero__slide');
+    const dotsContainer = document.getElementById('heroDots');
+    const prevBtn = document.getElementById('heroPrev');
+    const nextBtn = document.getElementById('heroNext');
+    let currentSlide = 0;
+    let autoPlayInterval;
 
-    // Regex para validação de email
-    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (dotsContainer && slides.length) {
+        // Criar bolinhas dinamicamente
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.setAttribute('aria-label', `Ir para slide ${i + 1}`);
+            if (i === 0) dot.classList.add('is-active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
 
-    // ============================================
-    // FUNÇÕES DE VALIDAÇÃO
-    // ============================================
-    function validateEmail(email) {
-        return EMAIL_REGEX.test(email);
-    }
+        const dots = dotsContainer.querySelectorAll('button');
 
-    function validatePassword(password) {
-        return password.length >= 6;
-    }
-
-    function showError(wrapper, errorElement, message) {
-        wrapper.classList.add('error');
-        if (message) {
-            const span = errorElement.querySelector('span');
-            if (span) span.textContent = message;
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('is-active');
+            dots[currentSlide].classList.remove('is-active');
+            
+            currentSlide = (index + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('is-active');
+            dots[currentSlide].classList.add('is-active');
+            
+            resetAutoPlay();
         }
-        errorElement.classList.add('show');
-    }
 
-    function clearError(wrapper, errorElement) {
-        wrapper.classList.remove('error');
-        errorElement.classList.remove('show');
-    }
+        function nextSlide() { goToSlide(currentSlide + 1); }
+        function prevSlide() { goToSlide(currentSlide - 1); }
 
-    function clearAllErrors() {
-        clearError(emailWrapper, emailError);
-        clearError(passwordWrapper, passwordError);
-    }
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 5000);
+        }
 
-    // ============================================
-    // VALIDAÇÃO EM TEMPO REAL
-    // ============================================
-    emailInput.addEventListener('input', function() {
-        if (this.value.trim() !== '') {
-            if (validateEmail(this.value.trim())) {
-                clearError(emailWrapper, emailError);
-            } else {
-                showError(emailWrapper, emailError, 'Por favor, insira um e-mail válido.');
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            startAutoPlay();
+        }
+
+        nextBtn?.addEventListener('click', nextSlide);
+        prevBtn?.addEventListener('click', prevSlide);
+
+        // Pausar autoplay ao passar o mouse
+        const heroEl = document.querySelector('.hero');
+        heroEl?.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+        heroEl?.addEventListener('mouseleave', startAutoPlay);
+
+        // Suporte a swipe (mobile)
+        let touchStartX = 0;
+        heroEl?.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        heroEl?.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                diff > 0 ? nextSlide() : prevSlide();
             }
-        } else {
-            clearError(emailWrapper, emailError);
-        }
+        });
+
+        startAutoPlay();
+    }
+
+    // ============================================
+    // HEADER: mudar estilo ao rolar
+    // ============================================
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 50);
     });
 
-    emailInput.addEventListener('blur', function() {
-        const value = this.value.trim();
-        if (value === '') {
-            showError(emailWrapper, emailError, 'O e-mail é obrigatório.');
-        } else if (!validateEmail(value)) {
-            showError(emailWrapper, emailError, 'Por favor, insira um e-mail válido.');
-        }
+    // ============================================
+    // MENU MOBILE
+    // ============================================
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle?.addEventListener('click', () => {
+        navMenu.classList.toggle('is-open');
+        const icon = menuToggle.querySelector('i');
+        icon.className = navMenu.classList.contains('is-open') 
+            ? 'fas fa-times' 
+            : 'fas fa-bars';
     });
 
-    passwordInput.addEventListener('input', function() {
-        if (this.value.length > 0) {
-            if (validatePassword(this.value)) {
-                clearError(passwordWrapper, passwordError);
-            } else {
-                showError(passwordWrapper, passwordError, 'A senha deve ter pelo menos 6 caracteres.');
+    // Fechar menu ao clicar em um link
+    navMenu?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 968) {
+                navMenu.classList.remove('is-open');
+                menuToggle.querySelector('i').className = 'fas fa-bars';
             }
-        } else {
-            clearError(passwordWrapper, passwordError);
-        }
-    });
-
-    passwordInput.addEventListener('blur', function() {
-        if (this.value === '') {
-            showError(passwordWrapper, passwordError, 'A senha é obrigatória.');
-        } else if (!validatePassword(this.value)) {
-            showError(passwordWrapper, passwordError, 'A senha deve ter pelo menos 6 caracteres.');
-        }
+        });
     });
 
     // ============================================
-    // TOGGLE DE SENHA (MOSTRAR/OCULTAR)
+    // MODO NOTURNO
     // ============================================
-    togglePassword.addEventListener('click', function() {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('triplex-theme');
 
-        const icon = this.querySelector('i');
-        if (type === 'password') {
-            icon.className = 'fas fa-eye';
-            this.setAttribute('aria-label', 'Mostrar senha');
-        } else {
-            icon.className = 'fas fa-eye-slash';
-            this.setAttribute('aria-label', 'Ocultar senha');
-        }
-    });
+    function updateThemeControl() {
+        const isDark = document.body.classList.contains('dark-mode');
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        themeToggle.setAttribute('aria-label', isDark ? 'Desativar modo noturno' : 'Ativar modo noturno');
+        themeToggle.querySelector('i').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    }
 
-    // ============================================
-    // TOAST
-    // ============================================
-    function showToast(message) {
-        toastMessage.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
+    if (themeToggle) {
+        if (savedTheme === 'dark') document.body.classList.add('dark-mode');
+        updateThemeControl();
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('triplex-theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            updateThemeControl();
+        });
     }
 
     // ============================================
-    // SUBMIT DO FORMULÁRIO
+    // LOGIN E CADASTRO
     // ============================================
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    const authButtons = document.querySelectorAll('[data-auth-action]');
 
-        clearAllErrors();
+    if (authButtons.length) {
+        const authModal = document.createElement('div');
+        authModal.className = 'auth-modal';
+        authModal.setAttribute('aria-hidden', 'true');
+        authModal.innerHTML = `
+            <div class="auth-modal__backdrop" data-auth-close></div>
+            <section class="auth-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+                <button class="auth-modal__close" type="button" aria-label="Fechar" data-auth-close>
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
+                <div class="auth-modal__intro">
+                    <p class="about-kicker">TRIPLEX CLUB</p>
+                    <h2 id="authTitle"></h2>
+                    <p id="authDescription"></p>
+                </div>
+                <form class="auth-form" id="authForm">
+                    <div class="auth-form__register-field">
+                        <label for="authCpf">CPF</label>
+                        <input id="authCpf" name="cpf" type="text" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" required>
+                    </div>
+                    <div class="auth-form__register-field">
+                        <label for="authName">Nome</label>
+                        <input id="authName" name="name" type="text" autocomplete="name" placeholder="Seu nome" required>
+                    </div>
+                    <div class="auth-form__register-field">
+                        <label for="authAge">Idade</label>
+                        <input id="authAge" name="age" type="number" min="1" max="120" inputmode="numeric" placeholder="Sua idade" required>
+                    </div>
+                    <div>
+                        <label for="authEmail">E-mail</label>
+                        <input id="authEmail" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required>
+                    </div>
+                    <div>
+                        <label for="authPassword">Senha</label>
+                        <input id="authPassword" name="password" type="password" autocomplete="current-password" placeholder="Sua senha" required>
+                    </div>
+                    <div class="auth-form__register-field">
+                        <label for="authPasswordConfirm">Confirmar senha</label>
+                        <input id="authPasswordConfirm" name="passwordConfirm" type="password" autocomplete="new-password" placeholder="Repita sua senha" required>
+                    </div>
+                    <button class="btn btn--primary auth-form__submit" type="submit" id="authSubmit"></button>
+                    <p class="auth-form__feedback" id="authFeedback" role="status"></p>
+                </form>
+                <p class="auth-modal__switch" id="authSwitch"></p>
+            </section>`;
+        document.body.appendChild(authModal);
 
-        const email = emailInput.value.trim();
-        const password = passwordInput.value;
+        const authForm = authModal.querySelector('#authForm');
+        const authCpf = authModal.querySelector('#authCpf');
+        const authName = authModal.querySelector('#authName');
+        const authAge = authModal.querySelector('#authAge');
+        const authPassword = authModal.querySelector('#authPassword');
+        const authPasswordConfirm = authModal.querySelector('#authPasswordConfirm');
+        const authTitle = authModal.querySelector('#authTitle');
+        const authDescription = authModal.querySelector('#authDescription');
+        const authSubmit = authModal.querySelector('#authSubmit');
+        const authFeedback = authModal.querySelector('#authFeedback');
+        const authSwitch = authModal.querySelector('#authSwitch');
+        let authMode = 'login';
 
-        let isValid = true;
-
-        if (!email) {
-            showError(emailWrapper, emailError, 'O e-mail é obrigatório.');
-            isValid = false;
-        } else if (!validateEmail(email)) {
-            showError(emailWrapper, emailError, 'Por favor, insira um e-mail válido.');
-            isValid = false;
+        function renderAuthMode(mode) {
+            authMode = mode;
+            const isLogin = mode === 'login';
+            authTitle.textContent = isLogin ? 'Bom ter você de volta.' : 'Entre para a comunidade.';
+            authDescription.textContent = isLogin
+                ? 'Acesse sua conta e continue no seu ritmo.'
+                : 'Crie sua conta e acompanhe tudo que move o Triplex.';
+            authSubmit.textContent = isLogin ? 'Entrar na conta' : 'Criar minha conta';
+            authModal.querySelectorAll('.auth-form__register-field').forEach(field => {
+                field.hidden = isLogin;
+                field.querySelector('input').required = !isLogin;
+            });
+            authName.required = !isLogin;
+            authPassword.autocomplete = isLogin ? 'current-password' : 'new-password';
+            authPasswordConfirm.required = !isLogin;
+            authSwitch.innerHTML = isLogin
+                ? 'Ainda não tem uma conta? <button type="button" data-auth-switch="register">Registre-se</button>'
+                : 'Já tem uma conta? <button type="button" data-auth-switch="login">Entrar</button>';
+            authFeedback.textContent = '';
         }
 
-        if (!password) {
-            showError(passwordWrapper, passwordError, 'A senha é obrigatória.');
-            isValid = false;
-        } else if (!validatePassword(password)) {
-            showError(passwordWrapper, passwordError, 'A senha deve ter pelo menos 6 caracteres.');
-            isValid = false;
+        function openAuth(mode) {
+            renderAuthMode(mode);
+            authModal.classList.add('is-open');
+            authModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('auth-is-open');
+            (authMode === 'login' ? authModal.querySelector('#authEmail') : authName).focus();
         }
 
-        if (!isValid) return;
-
-        // Salvar email se "Lembrar-me" estiver marcado
-        const rememberMe = document.getElementById('rememberMe').checked;
-        if (rememberMe) {
-            localStorage.setItem('rememberedEmail', email);
-        } else {
-            localStorage.removeItem('rememberedEmail');
+        function closeAuth() {
+            authModal.classList.remove('is-open');
+            authModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('auth-is-open');
         }
 
-        // Simular requisição de login
-        loginBtn.classList.add('loading');
-        loginBtn.disabled = true;
-
-        // 🔁 SUBSTITUA POR UMA CHAMADA REAL À API:
-        // fetch('/api/login', { method: 'POST', ... })
-        setTimeout(() => {
-            loginBtn.classList.remove('loading');
-            loginBtn.disabled = false;
-
-            showToast('Login realizado com sucesso! Redirecionando...');
-
-            // Exemplo: redirecionar após 1.5s
-            // setTimeout(() => {
-            //     window.location.href = '/dashboard';
-            // }, 1500);
-
-            console.log('Login bem-sucedido para:', email);
-        }, 1500);
-    });
-
-    // ============================================
-    // ACESSIBILIDADE: FECHAR TOAST COM ESC
-    // ============================================
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && toast.classList.contains('show')) {
-            toast.classList.remove('show');
-        }
-    });
-
-    // ============================================
-    // INICIALIZAÇÃO
-    // ============================================
-    emailInput.focus();
-
-    const rememberedEmail = localStorage.getItem('rememberedEmail');
-    if (rememberedEmail) {
-        emailInput.value = rememberedEmail;
-        document.getElementById('rememberMe').checked = true;
+        authButtons.forEach(button => button.addEventListener('click', () => openAuth(button.dataset.authAction)));
+        authModal.querySelectorAll('[data-auth-close]').forEach(button => button.addEventListener('click', closeAuth));
+        authSwitch.addEventListener('click', event => {
+            const switchButton = event.target.closest('[data-auth-switch]');
+            if (switchButton) renderAuthMode(switchButton.dataset.authSwitch);
+        });
+        authForm.addEventListener('submit', event => {
+            event.preventDefault();
+            if (authMode === 'register' && authPassword.value !== authPasswordConfirm.value) {
+                authFeedback.textContent = 'As senhas precisam ser iguais.';
+                authPasswordConfirm.focus();
+                return;
+            }
+            authFeedback.textContent = authMode === 'login'
+                ? 'Login pronto para ser conectado ao seu servidor.'
+                : 'Cadastro pronto para ser conectado ao seu servidor.';
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && authModal.classList.contains('is-open')) closeAuth();
+        });
+        renderAuthMode('login');
     }
+
+    // ============================================
+    // SCROLL SUAVE
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ============================================
+    // ANIMAÇÃO DE ENTRADA (Intersection Observer)
+    // ============================================
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+    document.querySelectorAll('.card, .card-big, .brands__item').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(40px)';
+        el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        observer.observe(el);
+    });
+
 })();

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triplex Club | Onde a resenha acontece</title>
+    <meta name="description" content="Conheça o Triplex Club: um lugar contagiante, cheio de resenha, encontros e momentos que fazem tremer.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo" aria-label="Triplex, início">
+                <span class="brand-wordmark">TRIPLEX</span>
+            </a>
+
+            <nav class="header__nav" id="navMenu">
+                <ul>
+                    <li><a href="index.html#home">Início</a></li>
+                    <li class="has-submenu">
+                        <a href="index.html#espacos">Espaços <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="index.html#espacos">Apartamentos</a></li>
+                            <li><a href="index.html#espacos">Área de lazer</a></li>
+                            <li><a href="index.html#espacos">Convivência</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#espacos">Viver bem</a></li>
+                    <li><a href="index.html#profissionais">Profissionais</a></li>
+                    <li><a href="sobre.html" aria-current="page">Sobre o Triplex</a></li>
+                    <li><a href="index.html#contato">Fale conosco</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <button class="btn btn--outline" type="button" data-auth-action="login">Entrar</button>
+                <button class="btn btn--primary" type="button" data-auth-action="register">Registre-se</button>
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar modo noturno" aria-pressed="false">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+                <button class="header__menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="about-hero">
+            <div class="about-hero__inner">
+                <p class="hero__pretitle">TRIPLEX CLUB</p>
+                <h1>Onde a resenha acontece.<br><em>E o chão começa a tremer.</em></h1>
+                <p>O Triplex é um lugar contagiante: tem encontro, tem história, tem gente boa e uma vibe que transforma qualquer dia em momento inesquecível.</p>
+            </div>
+            <div class="about-hero__stamp" aria-hidden="true"><i class="fas fa-music"></i><span>Vibe<br>Triplex</span></div>
+        </section>
+
+        <section class="about-story section">
+            <div class="about-story__intro">
+                <p class="about-kicker">A nossa vibe</p>
+                <h2>Mais que um endereço: um ponto de encontro.</h2>
+            </div>
+            <div class="about-story__copy">
+                <p>O Triplex nasceu para ser aquele lugar que você indica para todo mundo: acolhedor, vivo e sempre pronto para uma boa resenha.</p>
+                <p>Aqui, os espaços foram pensados para aproximar pessoas, receber histórias e deixar a rotina com mais personalidade.</p>
+                <p>É clube, é comunidade, é casa. Um lugar contagiante onde a gente se encontra, se diverte e faz tremer do nosso jeito.</p>
+            </div>
+        </section>
+
+        <section class="about-timeline section" aria-labelledby="timeline-title">
+            <div class="section__title-wrap">
+                <p class="about-kicker">O que acontece por aqui</p>
+                <h2 id="timeline-title" class="section__title">Cada canto tem uma história para contar.</h2>
+            </div>
+            <div class="timeline">
+                <article class="timeline__item">
+                    <span class="timeline__year">01</span>
+                    <div><h3>Chegou, já faz parte</h3><p>Um endereço que aproxima pessoas, encontros e tudo o que deixa a vida mais interessante.</p></div>
+                </article>
+                <article class="timeline__item">
+                    <span class="timeline__year">02</span>
+                    <div><h3>Resenha garantida</h3><p>Espaços feitos para conversar, rir alto, receber amigos e criar memórias.</p></div>
+                </article>
+                <article class="timeline__item">
+                    <span class="timeline__year">03</span>
+                    <div><h3>Vibe contagiante</h3><p>Uma energia boa que circula pelos ambientes e faz todo mundo querer ficar mais um pouco.</p></div>
+                </article>
+                <article class="timeline__item">
+                    <span class="timeline__year">04</span>
+                    <div><h3>Fazemos tremer</h3><p>Porque os melhores momentos não passam despercebidos: eles ficam, vibram e fazem história.</p></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="about-values section">
+            <div class="about-values__heading">
+                <p class="about-kicker">O que nos guia</p>
+                <h2>Triplex Club é viver com atitude.</h2>
+            </div>
+            <div class="about-values__grid">
+                <article><i class="fas fa-comments" aria-hidden="true"></i><h3>Resenha</h3><p>Conversas que atravessam a noite e encontros que viram história.</p></article>
+                <article><i class="fas fa-users" aria-hidden="true"></i><h3>Comunidade</h3><p>Gente que chega para morar e fica porque encontrou sua turma.</p></article>
+                <article><i class="fas fa-music" aria-hidden="true"></i><h3>Vibração</h3><p>Uma vibe contagiante para viver cada momento com presença.</p></article>
+            </div>
+        </section>
+
+        <section class="about-quote section">
+            <p>“Triplex Club é onde a resenha começa, a vibe contagia e a gente faz tremer.”</p>
+            <span>Triplex Club, um lugar contagiante</span>
+        </section>
+    </main>
+
+    <footer class="footer" id="contato">
+        <div class="footer__container">
+            <div class="footer__brand"><i class="fas fa-house"></i><span>TRIPLEX</span></div>
+            <div class="footer__links">
+                <div><h4>Sobre nós</h4><ul><li><a href="sobre.html">Nossa empresa</a></li><li><a href="#">Imprensa</a></li><li><a href="sobre.html">História</a></li><li><a href="#">Carreiras</a></li></ul></div>
+                <div><h4>Precisa de ajuda?</h4><ul><li><a href="#">FAQ</a></li><li><a href="#">Mapa do site</a></li><li><a href="index.html#contato">Contate-nos</a></li></ul></div>
+                <div><h4>Legal</h4><ul><li><a href="#">Termos de uso</a></li><li><a href="#">Privacidade</a></li><li><a href="#">Cookies</a></li></ul></div>
+            </div>
+            <div class="footer__social"><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a><a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a><a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a></div>
+            <p class="footer__copyright">© 2026 Triplex Club. Onde a resenha acontece.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

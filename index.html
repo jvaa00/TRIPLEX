@@ -3,109 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Acesso Profissional</title>
+    <title>Triplex | Um ótimo lugar para viver</title>
+    <meta name="description" content="Triplex: um condomínio pensado para viver bem, com conforto, segurança e praticidade.">
     
-    <!-- Fonte moderna -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    
-    <!-- Ícones Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- CSS externo -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Toast de sucesso -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Login realizado com sucesso!</span>
-    </div>
+    <!-- ============ HEADER (igual estrutura Coca-Cola) ============ -->
+    <header class="header" id="header">
+        <div class="header__container">
+            <a href="#" class="header__logo">
+                <span class="brand-wordmark">TRIPLEX</span>
+            </a>
 
-    <!-- Card de Login -->
-    <div class="login-card">
-        <div class="login-header">
-            <h1>Bem-vindo de volta</h1>
-            <p>Insira suas credenciais para acessar</p>
+            <nav class="header__nav" id="navMenu">
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li class="has-submenu">
+                        <a href="#espacos">Espaços <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="#espacos">Apartamentos</a></li>
+                            <li><a href="#espacos">Área de lazer</a></li>
+                            <li><a href="#espacos">Convivência</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#espacos">Viver bem</a></li>
+                    <li><a href="#profissionais">Profissionais</a></li>
+                    <li><a href="sobre.html">Sobre o Triplex</a></li>
+                    <li><a href="#contato">Fale conosco</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <button class="btn btn--outline" type="button" data-auth-action="login">Entrar</button>
+                <button class="btn btn--primary" type="button" data-auth-action="register">Registre-se</button>
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar modo noturno" aria-pressed="false">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+                <button class="header__menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
+    </header>
 
-        <form class="login-form" id="loginForm" novalidate>
-            <!-- Campo Email -->
-            <div class="input-group">
-                <label for="email">
-                    <i class="fas fa-envelope"></i>
-                    E-mail
-                </label>
-                <div class="input-wrapper" id="emailWrapper">
-                    <i class="fas fa-envelope input-icon"></i>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        placeholder="seu@email.com" 
-                        autocomplete="email"
-                        required
-                    >
-                </div>
-                <div class="error-message" id="emailError">
-                    <i class="fas fa-circle-exclamation"></i>
-                    <span>Por favor, insira um e-mail válido.</span>
+    <!-- ============ HERO CARROSSEL (igual Coca-Cola) ============ -->
+    <section class="hero" id="home">
+        <div class="hero__slider" id="heroSlider">
+            
+            <div class="hero__slide is-active" style="background-image: url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=88');">
+                <div class="hero__content">
+                    <p class="hero__pretitle">SEU NOVO ENDEREÇO</p>
+                    <h1 class="hero__title">Um ótimo lugar para viver</h1>
+                    <p class="hero__description">Conforto, segurança e espaços para aproveitar cada momento do seu jeito.</p>
+                    <a href="#espacos" class="btn btn--light">Conheça o Triplex</a>
                 </div>
             </div>
 
-            <!-- Campo Senha -->
-            <div class="input-group">
-                <label for="password">
-                    <i class="fas fa-lock"></i>
-                    Senha
-                </label>
-                <div class="input-wrapper" id="passwordWrapper">
-                    <i class="fas fa-lock input-icon"></i>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        placeholder="••••••••" 
-                        autocomplete="current-password"
-                        required
-                    >
-                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Mostrar senha">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                </div>
-                <div class="error-message" id="passwordError">
-                    <i class="fas fa-circle-exclamation"></i>
-                    <span>A senha deve ter pelo menos 6 caracteres.</span>
+            <div class="hero__slide" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=88');">
+                <div class="hero__content">
+                    <p class="hero__pretitle">VIVER COM LEVEZA</p>
+                    <h1 class="hero__title">Tudo perto de você</h1>
+                    <p class="hero__description">Um projeto inteligente para deixar sua rotina mais prática e tranquila.</p>
+                    <a href="#espacos" class="btn btn--light">Ver diferenciais</a>
                 </div>
             </div>
 
-            <!-- Opções -->
-            <div class="form-options">
-                <label class="checkbox-label">
-                    <input type="checkbox" id="rememberMe" name="rememberMe">
-                    Lembrar-me
-                </label>
-                <a href="#" class="forgot-link">Esqueceu a senha?</a>
+            <div class="hero__slide" style="background-image: url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=88');">
+                <div class="hero__content">
+                    <p class="hero__pretitle">FEITO PARA CONVIVER</p>
+                    <h1 class="hero__title">Mais que um apartamento</h1>
+                    <p class="hero__description">Um lugar para construir histórias, receber amigos e chamar de lar.</p>
+                    <a href="#contato" class="btn btn--light">Fale com a gente</a>
+                </div>
             </div>
 
-            <!-- Botão de Login -->
-            <button type="submit" class="btn-login" id="loginBtn">
-                <span class="spinner"></span>
-                <span class="btn-text">
-                    <i class="fas fa-arrow-right-to-bracket"></i>
-                    Entrar
-                </span>
-            </button>
-        </form>
-
-        <div class="login-footer">
-            Não tem uma conta? <a href="#">Cadastre-se</a>
+            <button class="hero__arrow hero__arrow--prev" id="heroPrev" aria-label="Slide anterior"><i class="fas fa-arrow-left"></i></button>
+            <button class="hero__arrow hero__arrow--next" id="heroNext" aria-label="Próximo slide"><i class="fas fa-arrow-right"></i></button>
         </div>
-    </div>
+        <!-- Indicadores do carrossel -->
+        <div class="hero__dots" id="heroDots"></div>
+    </section>
 
-    <!-- JS externo -->
+    <!-- ============ DIFERENCIAIS ============ -->
+    <section class="section" id="espacos">
+        <h2 class="section__title">O jeito Triplex de viver</h2>
+        
+        <div class="grid grid--3">
+            <a href="#" class="card">
+                <div class="card__image">
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=88" alt="Sala de estar integrada e iluminada no Triplex">
+                </div>
+                <div class="card__content">
+                    <h3>Conforto todos os dias</h3>
+                    <p>Sala integrada, luz natural e acabamentos que fazem você se sentir em casa.</p>
+                    <span class="card__link">Descobrir <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card__image">
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=88" alt="Área de convivência elegante e acolhedora">
+                </div>
+                <div class="card__content">
+                    <h3>Espaços para compartilhar</h3>
+                    <p>Ambientes de convivência acolhedores para receber, conversar e criar memórias.</p>
+                    <span class="card__link">Conhecer <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card__image">
+                    <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=88" alt="Detalhe de arquitetura e iluminação de um apartamento">
+                </div>
+                <div class="card__content">
+                    <h3>Segurança e tranquilidade</h3>
+                    <p>Arquitetura funcional e ambientes bem planejados para uma rotina mais tranquila.</p>
+                    <span class="card__link">Ver detalhes <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============ CARD GRANDE: Sustentabilidade ============ -->
+    <section class="section">
+        <div class="card-big card-big--left">
+            <div class="card-big__image">
+                <img src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1200&q=88" alt="Área verde ao lado de uma residência moderna">
+            </div>
+            <div class="card-big__content">
+                <h2>Um projeto que cuida do futuro</h2>
+                <p>Áreas verdes, iluminação eficiente e escolhas responsáveis fazem parte de um condomínio mais agradável para todos.</p>
+                <a href="#contato" class="btn btn--primary">Saiba mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CARD GRANDE: Loja ============ -->
+    <section class="section">
+        <div class="card-big card-big--right">
+            <div class="card-big__content">
+                <h2>Seu espaço, seu jeito</h2>
+                <p>Plantas e ambientes que acompanham diferentes momentos da vida, com a liberdade de morar como você deseja.</p>
+                <a href="#contato" class="btn btn--primary">Conhecer plantas</a>
+            </div>
+            <div class="card-big__image">
+                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=88" alt="Interior amplo e contemporâneo de um apartamento Triplex">
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ PROFISSIONAIS ============ -->
+    <section class="section professionals" id="profissionais">
+        <div class="section__title-wrap">
+            <p class="about-kicker">Quem faz acontecer</p>
+            <h2 class="section__title">Profissionais que pensam no seu jeito de viver.</h2>
+        </div>
+        <div class="professionals__grid">
+            <article class="professional-card">
+                <div class="professional-card__photo">
+                    <img src="assets/dw.jpeg" alt="D.W., síndico do Triplex">
+                </div>
+                <div class="professional-card__content">
+                    <h3>D.W.</h3>
+                    <p>Síndico</p>
+                </div>
+            </article>
+            <article class="professional-card">
+                <div class="professional-card__photo">
+                    <img src="assets/jv.jpeg" alt="J.V., cozinheiro do Triplex">
+                </div>
+                <div class="professional-card__content">
+                    <h3>J.V.</h3>
+                    <p>Cozinheiro</p>
+                </div>
+            </article>
+            <article class="professional-card">
+                <div class="professional-card__photo">
+                    <img src="assets/kilmer.jpeg" alt="Kilmer, piscineiro do Triplex">
+                </div>
+                <div class="professional-card__content">
+                    <h3>Kilmer</h3>
+                    <p>Piscineiro</p>
+                </div>
+            </article>
+            <article class="professional-card">
+                <div class="professional-card__photo">
+                    <img src="assets/renas.jpeg" alt="Renas, porteiro do Triplex">
+                </div>
+                <div class="professional-card__content">
+                    <h3>Renas</h3>
+                    <p>Porteiro</p>
+                </div>
+            </article>
+            <article class="professional-card">
+                <div class="professional-card__photo">
+                    <img src="assets/zezao.jpeg" alt="Zezão, faxineiro do Triplex">
+                </div>
+                <div class="professional-card__content">
+                    <h3>Zezão</h3>
+                    <p>Faxineiro</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ============ BENEFÍCIOS ============ -->
+    <section class="section brands">
+        <h2 class="section__title">Tudo para viver melhor</h2>
+        <div class="brands__grid">
+            <a href="#" class="brands__item">
+                <i class="fas fa-location-dot" aria-hidden="true"></i>
+                <span>Localização privilegiada</span>
+            </a>
+            <a href="#" class="brands__item">
+                <i class="fas fa-person-swimming" aria-hidden="true"></i>
+                <span>Lazer completo</span>
+            </a>
+            <a href="#" class="brands__item">
+                <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                <span>Segurança 24 horas</span>
+            </a>
+        </div>
+        <div class="brands__cta">
+            <a href="#contato" class="btn btn--outline">Quero conhecer</a>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer" id="contato">
+        <div class="footer__container">
+            <div class="footer__brand">
+                <span>TRIPLEX</span>
+            </div>
+
+            <div class="footer__links">
+                <div>
+                    <h4>Sobre nós</h4>
+                    <ul>
+                        <li><a href="sobre.html">O Triplex</a></li>
+                        <li><a href="#">Novidades</a></li>
+                        <li><a href="sobre.html">Nossa história</a></li>
+                        <li><a href="#contato">Trabalhe conosco</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Precisa de ajuda?</h4>
+                    <ul>
+                        <li><a href="#">Dúvidas frequentes</a></li>
+                        <li><a href="#">Como chegar</a></li>
+                        <li><a href="#contato">Fale conosco</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Termos de uso</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__social">
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+
+            <p class="footer__copyright">© 2026 Triplex Club. Onde a resenha acontece.</p>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
