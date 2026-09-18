@@ -249,6 +249,121 @@
     }
 
     // ============================================
+    // CONTATO DO TRIPLEX CLUB
+    // ============================================
+    const contactButton = document.querySelector('[data-club-contact]');
+
+    if (contactButton) {
+        const contactModal = document.createElement('div');
+        contactModal.className = 'contact-modal';
+        contactModal.setAttribute('aria-hidden', 'true');
+        contactModal.innerHTML = `
+            <div class="contact-modal__backdrop" data-contact-close></div>
+            <section class="contact-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+                <button class="contact-modal__close" type="button" aria-label="Fechar" data-contact-close>
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
+                <img class="contact-modal__photo" src="assets/lugu.jpeg" alt="Lugu, CEO do Triplex Club">
+                <div class="contact-modal__content">
+                    <p class="about-kicker">TRIPLEX CLUB</p>
+                    <h2 id="contactTitle">Fale com o Lugu</h2>
+                    <p>Quer conhecer o Triplex? O Lugu, Sabor CEO do Triplex Club, ele pode te explicar tudo sobre esse lugar.</p>
+                    <a class="contact-modal__phone" href="tel:+558585130093">
+                        <i class="fas fa-phone" aria-hidden="true"></i>
+                        <span>85 8513-0093</span>
+                    </a>
+                </div>
+            </section>`;
+        document.body.appendChild(contactModal);
+
+        function closeContactModal() {
+            contactModal.classList.remove('is-open');
+            contactModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('contact-is-open');
+        }
+
+        contactButton.addEventListener('click', event => {
+            event.preventDefault();
+            contactModal.classList.add('is-open');
+            contactModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('contact-is-open');
+            contactModal.querySelector('[data-contact-close]').focus();
+        });
+        contactModal.querySelectorAll('[data-contact-close]').forEach(button => {
+            button.addEventListener('click', closeContactModal);
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && contactModal.classList.contains('is-open')) closeContactModal();
+        });
+    }
+
+    // ============================================
+    // PERFIS DOS PROFISSIONAIS
+    // ============================================
+    const professionalCards = document.querySelectorAll('[data-professional-name]');
+
+    if (professionalCards.length) {
+        const professionalModal = document.createElement('div');
+        professionalModal.className = 'professional-modal';
+        professionalModal.setAttribute('aria-hidden', 'true');
+        professionalModal.innerHTML = `
+            <div class="professional-modal__backdrop" data-professional-close></div>
+            <section class="professional-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="professionalTitle">
+                <button class="professional-modal__close" type="button" aria-label="Fechar" data-professional-close>
+                    <i class="fas fa-xmark" aria-hidden="true"></i>
+                </button>
+                <img class="professional-modal__photo" src="" alt="">
+                <div class="professional-modal__content">
+                    <p class="about-kicker">TRIPLEX CLUB</p>
+                    <h2 id="professionalTitle"></h2>
+                    <p class="professional-modal__role"></p>
+                    <p class="professional-modal__description"></p>
+                </div>
+            </section>`;
+        document.body.appendChild(professionalModal);
+
+        const professionalPhoto = professionalModal.querySelector('.professional-modal__photo');
+        const professionalTitle = professionalModal.querySelector('#professionalTitle');
+        const professionalRole = professionalModal.querySelector('.professional-modal__role');
+        const professionalDescription = professionalModal.querySelector('.professional-modal__description');
+
+        function closeProfessionalModal() {
+            professionalModal.classList.remove('is-open');
+            professionalModal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('professional-is-open');
+        }
+
+        function openProfessionalModal(card) {
+            const photo = card.querySelector('img');
+            professionalTitle.textContent = card.dataset.professionalName;
+            professionalRole.textContent = card.dataset.professionalRole;
+            professionalDescription.textContent = card.dataset.professionalDescription;
+            professionalPhoto.src = photo.src;
+            professionalPhoto.alt = photo.alt;
+            professionalModal.classList.add('is-open');
+            professionalModal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('professional-is-open');
+            professionalModal.querySelector('[data-professional-close]').focus();
+        }
+
+        professionalCards.forEach(card => {
+            card.addEventListener('click', () => openProfessionalModal(card));
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openProfessionalModal(card);
+                }
+            });
+        });
+        professionalModal.querySelectorAll('[data-professional-close]').forEach(button => {
+            button.addEventListener('click', closeProfessionalModal);
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && professionalModal.classList.contains('is-open')) closeProfessionalModal();
+        });
+    }
+
+    // ============================================
     // SCROLL SUAVE
     // ============================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
